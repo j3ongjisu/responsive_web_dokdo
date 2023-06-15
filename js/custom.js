@@ -1,4 +1,5 @@
 $(function () {
+
     $(window).on('scroll', function () {
         let sct = $(window).scrollTop();
         sct > 0
@@ -6,46 +7,50 @@ $(function () {
             : $('.header').removeClass('on');
     });
 
-    //const mainSlide = $('.main_slide').slick({});
-    let snum = 1;
+
+    $(window).on('scroll', function () {
+        let sct = $(window).scrollTop();
+        $('._se_').each(function () {
+            if (sct + $(window).innerHeight() - 200 > $(this).offset().top) {
+                $(this).addClass('on')
+            } else {
+                $(this).removeClass('on')
+            }
+        })
+    })
+
     const mainSlide = new Swiper('.main_slide', {
         loop: true,
+        parallax: true,
+        speed: 1000,
         autoplay: {
-            delay: 1000,
+            delay: 4000,
             disableOnInteraction: false,
         },
         slideActiveClass: 'on',
-        on: {
-            init: function () {
-                //console.log('ㅇㅇ', this.realIndex, this.slides.length, this)
-                $('.num span').text(this.realIndex + 1);
-                $('.num strong').text(this.slides.length);
-            },
-            slideChangeTransitionEnd: function () {
-                $('.num span').text(this.realIndex + 1);
-                $('.circle span:nth-child(1)').css({
-                    transform: 'translate(-50%, 0) rotate(' + snum * 45 + 'deg)'
-                });
-                snum = snum + 1;
-            }
-        },
     });
 
-
-    // 화살표
-    $('.main_visual .arrows .left ').on('click', function () {
-        mainSlide.slideNext();
-    });
-    $('.main_visual .arrows .right ').on('click', function () {
+    $('.main_visual .arrows .left').on('click', function () {
         mainSlide.slidePrev();
     });
 
+    $('.main_visual .arrows .right').on('click', function () {
+        mainSlide.slideNext();
+    });
 
-    // 도트
-    $('.main_visual .slide_dots li').on('click', function () {
-        let idx = $(this).index();
-        mainSlide.slideTo(idx)
-        $(this).addClass('on').siblings().removeClass('on');
-    })
+    const noticeSlide = new Swiper('.notice_slide', {
+        loop: true,
+        slidesPerView: 2,
+        spaceBetween: 30,
+    });
+
+    $('.main_notice .arrows .left').on('click', function () {
+        noticeSlide.slidePrev();
+    });
+
+    $('.main_notice .arrows .right').on('click', function () {
+        noticeSlide.slideNext();
+    });
+
 
 })
