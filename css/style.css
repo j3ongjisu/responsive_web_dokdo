@@ -754,7 +754,7 @@
     background: #fff;
     border-radius: 50%;
     opacity: .2;
-    -webkit-animation: span 2.0s linear infinite;
+    -webkit-animation: span 1s linear infinite;
 }
 
 @keyframes span {
