@@ -28,6 +28,7 @@ $(function () {
             disableOnInteraction: false,
         },
         slideActiveClass: 'on',
+
     });
 
     $('.main_visual .arrows .left').on('click', function () {
@@ -40,8 +41,15 @@ $(function () {
 
     const noticeSlide = new Swiper('.notice_slide', {
         loop: true,
-        slidesPerView: 2,
-        spaceBetween: 30,
+        slidesPerView: 1,
+        spaceBetween: 0,
+
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            }
+        }
     });
 
     $('.main_notice .arrows .left').on('click', function () {
@@ -64,5 +72,35 @@ $(function () {
         sct > 400 ? $('.to_top').addClass('on') : $('.to_top').removeClass('on');
     });
 
+    // 모바일 버튼 .on
+    $('.mobile_btn').on('click', function () {
+        $('.gnb').toggleClass('on');
+        $('.header').toggleClass('on');
+    });
 
+    // 모바일 메뉴 sub menu 나오게 하기
+    $('.gnb .main_menu>li>a').on('click', function (e) {
+        if ($('.gnb').hasClass('on')) {
+            e.preventDefault();
+            $(this).next().stop().slideToggle();
+            // 메뉴 밀어서 닫히게 하는 거
+            $(this)
+                .parent()
+                .siblings()
+                .find('.sub_menu')
+                .stop()
+                .slideUp();
+        }
+    });
+
+    $(window).on('resize', function () {
+        $('.gnb').removeClass('on')
+    });
+
+    $('.gnb').on('wheel', function (e) {
+        if ($('.gnb').removeClass('on')) {
+            e.preventDefault();
+        }
+
+    })
 })
